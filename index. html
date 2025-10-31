@@ -1,0 +1,3659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pak Model Grammar School - Complete Management System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #1a4b8c;
+            --secondary: #2c6cb0;
+            --accent: #e74c3c;
+            --success: #27ae60;
+            --warning: #f39c12;
+            --light: #f8f9fa;
+            --dark: #2c3e50;
+            --gray: #6c757d;
+            --white: #ffffff;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --radius: 8px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f7fa;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--white);
+            padding: 1rem 0;
+            box-shadow: var(--shadow);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo i {
+            font-size: 2.5rem;
+        }
+
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 600;
+        }
+
+        .school-info {
+            text-align: right;
+        }
+
+        .school-info p {
+            margin-bottom: 0.2rem;
+            opacity: 0.9;
+        }
+
+        /* Navigation */
+        nav {
+            background-color: var(--white);
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 1.5rem;
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            background-color: var(--light);
+            color: var(--secondary);
+            border-bottom-color: var(--secondary);
+        }
+
+        /* Main Content */
+        main {
+            padding: 2rem 0;
+            min-height: calc(100vh - 200px);
+        }
+
+        .section {
+            display: none;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--light);
+        }
+
+        .section-header h2 {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--primary);
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: var(--white);
+            padding: 1.5rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: var(--white);
+        }
+
+        .stat-card:nth-child(1) .stat-icon { background: var(--secondary); }
+        .stat-card:nth-child(2) .stat-icon { background: var(--success); }
+        .stat-card:nth-child(3) .stat-icon { background: var(--warning); }
+        .stat-card:nth-child(4) .stat-icon { background: var(--accent); }
+
+        .stat-info h3 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-info p {
+            color: var(--gray);
+            font-weight: 500;
+        }
+
+        /* Content Grid */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 2rem;
+        }
+
+        .form-container {
+            background: var(--white);
+            padding: 1.5rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            height: fit-content;
+        }
+
+        .table-container {
+            background: var(--white);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        .table-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--light);
+        }
+
+        .search-input {
+            padding: 0.5rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: var(--radius);
+            width: 250px;
+        }
+
+        /* Form Styles */
+        .form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .form h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--light);
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .form-group label {
+            font-weight: 500;
+            color: var(--dark);
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: var(--radius);
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--secondary);
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        /* Button Styles */
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: var(--radius);
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: var(--secondary);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background: #1a5a9c;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: var(--light);
+            color: var(--dark);
+        }
+
+        .btn-secondary:hover {
+            background: #e2e6ea;
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: var(--white);
+        }
+
+        .btn-success:hover {
+            background: #219653;
+        }
+
+        .btn-danger {
+            background: var(--accent);
+            color: var(--white);
+        }
+
+        .btn-danger:hover {
+            background: #c0392b;
+        }
+
+        /* Table Styles */
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .data-table th,
+        .data-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--light);
+        }
+
+        .data-table th {
+            background-color: var(--light);
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .data-table tr:hover {
+            background-color: #f8f9fa;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .action-btn {
+            padding: 0.5rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .action-btn.view {
+            background: var(--secondary);
+            color: var(--white);
+        }
+
+        .action-btn.edit {
+            background: var(--warning);
+            color: var(--white);
+        }
+
+        .action-btn.delete {
+            background: var(--accent);
+            color: var(--white);
+        }
+
+        .action-btn:hover {
+            transform: scale(1.1);
+        }
+
+        /* Attendance Section Styles */
+        .attendance-controls {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .attendance-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .attendance-stat {
+            background: var(--white);
+            padding: 1.5rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+
+        .attendance-stat h3 {
+            font-size: 2rem;
+            color: var(--secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .attendance-stat p {
+            color: var(--gray);
+            font-weight: 500;
+        }
+
+        .attendance-table th:nth-child(3),
+        .attendance-table td:nth-child(3) {
+            text-align: center;
+        }
+
+        .attendance-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .attendance-badge.present {
+            background: #d5f4e6;
+            color: var(--success);
+        }
+
+        .attendance-badge.absent {
+            background: #fdeaea;
+            color: var(--accent);
+        }
+
+        .attendance-badge.late {
+            background: #fef5e7;
+            color: var(--warning);
+        }
+
+        /* Attendance List Styles */
+        .attendance-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-top: 1rem;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .attendance-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background: var(--light);
+            border-radius: var(--radius);
+        }
+
+        .student-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .student-name {
+            font-weight: 600;
+        }
+
+        .student-id {
+            font-size: 0.8rem;
+            color: var(--gray);
+        }
+
+        .attendance-options {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .attendance-option {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Calendar for Attendance */
+        .attendance-calendar {
+            background: var(--white);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+        }
+
+        .calendar-day {
+            padding: 0.5rem;
+            text-align: center;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .calendar-day.header {
+            font-weight: 600;
+            background: var(--light);
+        }
+
+        .calendar-day.today {
+            background: var(--secondary);
+            color: white;
+        }
+
+        .calendar-day.has-attendance {
+            background: var(--success);
+            color: white;
+        }
+
+        /* ID Cards Grid */
+        .id-cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .id-card {
+            background: linear-gradient(135deg, #1a4b8c 0%, #2c6cb0 100%);
+            color: var(--white);
+            padding: 1.5rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .id-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--secondary);
+        }
+
+        .id-card-header {
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .id-card-header h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .id-card-body {
+            display: grid;
+            gap: 0.5rem;
+        }
+
+        .id-card-field {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.25rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .id-card-actions {
+            margin-top: 1rem;
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-content {
+            background-color: var(--white);
+            margin: 5% auto;
+            padding: 2rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            width: 90%;
+            max-width: 800px;
+            position: relative;
+            animation: slideIn 0.3s ease;
+        }
+
+        .close {
+            position: absolute;
+            right: 1rem;
+            top: 1rem;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--gray);
+        }
+
+        .close:hover {
+            color: var(--dark);
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--light);
+        }
+
+        /* Enhanced Printable Marksheet Styles */
+        .marksheet-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .marksheet-preview {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        
+        .marksheet-a4 {
+            width: 210mm;
+            min-height: 297mm;
+            padding: 15mm;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+            font-family: 'Times New Roman', Times, serif;
+            color: #000;
+        }
+
+        .marksheet-header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            border-bottom: 3px double #333;
+            padding-bottom: 1rem;
+        }
+
+        .school-name {
+            font-size: 28px;
+            font-weight: bold;
+            color: #1a4b8c;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .school-address {
+            font-size: 16px;
+            color: #555;
+            margin-bottom: 0.5rem;
+        }
+
+        .school-contact {
+            font-size: 14px;
+            color: #555;
+        }
+
+        .marksheet-title {
+            font-size: 22px;
+            font-weight: bold;
+            text-align: center;
+            margin: 1.5rem 0;
+            text-decoration: underline;
+            text-transform: uppercase;
+        }
+
+        .student-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .info-item {
+            margin-bottom: 0.5rem;
+            display: flex;
+        }
+
+        .info-label {
+            font-weight: bold;
+            display: inline-block;
+            width: 140px;
+        }
+
+        .marks-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 1.5rem;
+            font-size: 14px;
+        }
+
+        .marks-table th, .marks-table td {
+            border: 1px solid #000;
+            padding: 0.5rem;
+            text-align: center;
+        }
+
+        .marks-table th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+
+        .marks-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        .summary {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .summary-item {
+            text-align: center;
+            padding: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: #f8f9fa;
+        }
+
+        .summary-label {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 0.5rem;
+        }
+
+        .summary-value {
+            font-size: 18px;
+            font-weight: bold;
+            color: #1a4b8c;
+        }
+
+        .signatures {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 3rem;
+        }
+
+        .signature-box {
+            text-align: center;
+            width: 200px;
+        }
+
+        .signature-line {
+            border-top: 1px solid #333;
+            margin: 3rem 0 0.5rem;
+        }
+
+        .signature-name {
+            font-weight: bold;
+        }
+
+        .signature-title {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .watermark {
+            position: absolute;
+            bottom: 20mm;
+            right: 20mm;
+            opacity: 0.1;
+            font-size: 80px;
+            transform: rotate(-45deg);
+            color: #1a4b8c;
+            pointer-events: none;
+        }
+
+        .remarks {
+            margin-top: 1rem;
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: #f8f9fa;
+        }
+
+        .remarks-title {
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Print Styles */
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            .marksheet-a4, .marksheet-a4 * {
+                visibility: visible;
+            }
+            .marksheet-a4 {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                box-shadow: none;
+                margin: 0;
+                padding: 15mm;
+            }
+            .no-print {
+                display: none !important;
+            }
+            .summary-item {
+                border: 1px solid #000;
+            }
+        }
+
+        /* Activities */
+        .activities-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .activity-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: var(--white);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+        }
+
+        .activity-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--secondary);
+            color: var(--white);
+        }
+
+        .activity-content p {
+            margin-bottom: 0.25rem;
+        }
+
+        .activity-content small {
+            color: var(--gray);
+        }
+
+        /* Toast Notifications */
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            padding: 1rem 1.5rem;
+            background: var(--success);
+            color: var(--white);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .toast.error {
+            background: var(--accent);
+        }
+
+        .toast.warning {
+            background: var(--warning);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--primary);
+            color: var(--white);
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 2rem;
+        }
+
+        footer p {
+            margin-bottom: 0.5rem;
+            opacity: 0.8;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Validation Styles */
+        .error-message {
+            color: var(--accent);
+            font-size: 0.85rem;
+            margin-top: 0.25rem;
+        }
+
+        .form-group.error input,
+        .form-group.error select,
+        .form-group.error textarea {
+            border-color: var(--accent);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-menu {
+                flex-direction: column;
+                gap: 0;
+            }
+            
+            .section-header {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: flex-start;
+            }
+            
+            .table-header {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: flex-start;
+            }
+            
+            .search-input {
+                width: 100%;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .id-cards-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .modal-content {
+                width: 95%;
+                margin: 10% auto;
+                padding: 1rem;
+            }
+            
+            .marksheet-summary {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+            
+            .school-info {
+                text-align: center;
+            }
+
+            .attendance-controls {
+                flex-direction: column;
+            }
+            
+            .attendance-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+            
+            .attendance-options {
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            .marksheet-a4 {
+                width: 100%;
+                padding: 10mm;
+            }
+
+            .student-info {
+                grid-template-columns: 1fr;
+            }
+
+            .summary {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .signatures {
+                flex-direction: column;
+                gap: 2rem;
+                align-items: center;
+            }
+            
+            .marksheet-actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-graduation-cap"></i>
+                    <div>
+                        <h1>Pak Model Grammar School</h1>
+                        <p>Knowledge, Wisdom, Excellence</p>
+                    </div>
+                </div>
+                <div class="school-info">
+                    <p>Established 1995</p>
+                    <p>123 Education Street, Learning City</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <ul class="nav-menu">
+                <li><a href="#dashboard" class="nav-link active"><i class="fas fa-home"></i> Dashboard</a></li>
+                <li><a href="#students" class="nav-link"><i class="fas fa-user-graduate"></i> Students</a></li>
+                <li><a href="#teachers" class="nav-link"><i class="fas fa-chalkboard-teacher"></i> Teachers</a></li>
+                <li><a href="#attendance" class="nav-link"><i class="fas fa-clipboard-check"></i> Attendance</a></li>
+                <li><a href="#exams" class="nav-link"><i class="fas fa-file-alt"></i> Exams</a></li>
+                <li><a href="#marksheets" class="nav-link"><i class="fas fa-award"></i> Marksheets</a></li>
+                <li><a href="#id-cards" class="nav-link"><i class="fas fa-id-card"></i> ID Cards</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <div class="container">
+            <!-- Dashboard Section -->
+            <section id="dashboard" class="section active">
+                <div class="section-header">
+                    <h2><i class="fas fa-tachometer-alt"></i> Dashboard</h2>
+                </div>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-user-graduate"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="total-students">0</h3>
+                            <p>Total Students</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-chalkboard-teacher"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="total-teachers">0</h3>
+                            <p>Total Teachers</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-file-alt"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="total-exams">0</h3>
+                            <p>Exams Scheduled</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-clipboard-check"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="attendance-rate">0%</h3>
+                            <p>Average Attendance</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="recent-activities">
+                    <h3>Recent Activities</h3>
+                    <div id="activities-list" class="activities-list">
+                        <!-- Activities will be populated by JavaScript -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Students Section -->
+            <section id="students" class="section">
+                <div class="section-header">
+                    <h2><i class="fas fa-user-graduate"></i> Student Management</h2>
+                    <button class="btn btn-primary" id="add-student-btn">
+                        <i class="fas fa-plus"></i> Add Student
+                    </button>
+                </div>
+
+                <div class="content-grid">
+                    <div class="form-container">
+                        <form id="studentForm" class="form">
+                            <h3 id="student-form-title">Add New Student</h3>
+                            <div class="form-group">
+                                <label for="studentName">Full Name</label>
+                                <input type="text" id="studentName" required>
+                                <div class="error-message" id="studentName-error"></div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="studentGrade">Grade</label>
+                                    <select id="studentGrade" required>
+                                        <option value="">Select Grade</option>
+                                        <option value="1">Grade 1</option>
+                                        <option value="2">Grade 2</option>
+                                        <option value="3">Grade 3</option>
+                                        <option value="4">Grade 4</option>
+                                        <option value="5">Grade 5</option>
+                                        <option value="6">Grade 6</option>
+                                        <option value="7">Grade 7</option>
+                                        <option value="8">Grade 8</option>
+                                        <option value="9">Grade 9</option>
+                                        <option value="10">Grade 10</option>
+                                        <option value="11">Grade 11</option>
+                                        <option value="12">Grade 12</option>
+                                    </select>
+                                    <div class="error-message" id="studentGrade-error"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="studentSection">Section</label>
+                                    <select id="studentSection" required>
+                                        <option value="">Select Section</option>
+                                        <option value="A">A</option>
+                                        <option value="B">B</option>
+                                        <option value="C">C</option>
+                                        <option value="D">D</option>
+                                    </select>
+                                    <div class="error-message" id="studentSection-error"></div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="studentEmail">Email</label>
+                                <input type="email" id="studentEmail" required>
+                                <div class="error-message" id="studentEmail-error"></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="studentPhone">Phone</label>
+                                <input type="tel" id="studentPhone" required>
+                                <div class="error-message" id="studentPhone-error"></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="parentName">Parent Name</label>
+                                <input type="text" id="parentName" required>
+                                <div class="error-message" id="parentName-error"></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="studentAddress">Address</label>
+                                <textarea id="studentAddress" rows="3"></textarea>
+                            </div>
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-primary">Save Student</button>
+                                <button type="button" class="btn btn-secondary" id="cancel-student-btn">Cancel</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="table-container">
+                        <div class="table-header">
+                            <h3>Student List</h3>
+                            <input type="text" id="studentSearch" placeholder="Search students..." class="search-input">
+                        </div>
+                        <div class="table-wrapper">
+                            <table id="studentsTable" class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Name</th>
+                                        <th>Grade</th>
+                                        <th>Email</th>
+                                        <th>Phone</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="studentsTableBody">
+                                    <!-- Students will be populated by JavaScript -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Teachers Section -->
+            <section id="teachers" class="section">
+                <div class="section-header">
+                    <h2><i class="fas fa-chalkboard-teacher"></i> Teacher Management</h2>
+                    <button class="btn btn-primary" id="add-teacher-btn">
+                        <i class="fas fa-plus"></i> Add Teacher
+                    </button>
+                </div>
+
+                <div class="content-grid">
+                    <div class="form-container">
+                        <form id="teacherForm" class="form">
+                            <h3 id="teacher-form-title">Add New Teacher</h3>
+                            <div class="form-group">
+                                <label for="teacherName">Full Name</label>
+                                <input type="text" id="teacherName" required>
+                                <div class="error-message" id="teacherName-error"></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="teacherDepartment">Department</label>
+                                <select id="teacherDepartment" required>
+                                    <option value="">Select Department</option>
+                                    <option value="Science">Science</option>
+                                    <option value="Mathematics">Mathematics</option>
+                                    <option value="English">English</option>
+                                    <option value="Social Studies">Social Studies</option>
+                                    <option value="Computer Science">Computer Science</option>
+                                    <option value="Arts">Arts</option>
+                                    <option value="Physical Education">Physical Education</option>
+                                </select>
+                                <div class="error-message" id="teacherDepartment-error"></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="teacherEmail">Email</label>
+                                <input type="email" id="teacherEmail" required>
+                                <div class="error-message" id="teacherEmail-error"></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="teacherPhone">Phone</label>
+                                <input type="tel" id="teacherPhone" required>
+                                <div class="error-message" id="teacherPhone-error"></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="teacherQualification">Qualification</label>
+                                <input type="text" id="teacherQualification" required>
+                                <div class="error-message" id="teacherQualification-error"></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="teacherSalary">Salary</label>
+                                <input type="number" id="teacherSalary" required>
+                                <div class="error-message" id="teacherSalary-error"></div>
+                            </div>
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-primary">Save Teacher</button>
+                                <button type="button" class="btn btn-secondary" id="cancel-teacher-btn">Cancel</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="table-container">
+                        <div class="table-header">
+                            <h3>Teacher List</h3>
+                            <input type="text" id="teacherSearch" placeholder="Search teachers..." class="search-input">
+                        </div>
+                        <div class="table-wrapper">
+                            <table id="teachersTable" class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Name</th>
+                                        <th>Department</th>
+                                        <th>Email</th>
+                                        <th>Qualification</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="teachersTableBody">
+                                    <!-- Teachers will be populated by JavaScript -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Attendance Section -->
+            <section id="attendance" class="section">
+                <div class="section-header">
+                    <h2><i class="fas fa-clipboard-check"></i> Attendance Management</h2>
+                    <button class="btn btn-primary" id="take-attendance-btn">
+                        <i class="fas fa-plus"></i> Take Attendance
+                    </button>
+                </div>
+
+                <div class="attendance-stats">
+                    <div class="attendance-stat">
+                        <h3 id="attendance-today">0%</h3>
+                        <p>Today's Attendance</p>
+                    </div>
+                    <div class="attendance-stat">
+                        <h3 id="attendance-month">0%</h3>
+                        <p>This Month</p>
+                    </div>
+                    <div class="attendance-stat">
+                        <h3 id="attendance-present">0</h3>
+                        <p>Present Today</p>
+                    </div>
+                    <div class="attendance-stat">
+                        <h3 id="attendance-absent">0</h3>
+                        <p>Absent Today</p>
+                    </div>
+                </div>
+
+                <div class="content-grid">
+                    <div class="form-container">
+                        <form id="attendanceForm" class="form">
+                            <h3>Take Attendance</h3>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="attendanceDate">Date</label>
+                                    <input type="date" id="attendanceDate" required>
+                                    <div class="error-message" id="attendanceDate-error"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="attendanceGrade">Grade</label>
+                                    <select id="attendanceGrade" required>
+                                        <option value="">Select Grade</option>
+                                        <option value="1">Grade 1</option>
+                                        <option value="2">Grade 2</option>
+                                        <option value="3">Grade 3</option>
+                                        <option value="4">Grade 4</option>
+                                        <option value="5">Grade 5</option>
+                                        <option value="6">Grade 6</option>
+                                        <option value="7">Grade 7</option>
+                                        <option value="8">Grade 8</option>
+                                        <option value="9">Grade 9</option>
+                                        <option value="10">Grade 10</option>
+                                        <option value="11">Grade 11</option>
+                                        <option value="12">Grade 12</option>
+                                    </select>
+                                    <div class="error-message" id="attendanceGrade-error"></div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="attendanceSection">Section</label>
+                                <select id="attendanceSection" required>
+                                    <option value="">Select Section</option>
+                                    <option value="A">A</option>
+                                    <option value="B">B</option>
+                                    <option value="C">C</option>
+                                    <option value="D">D</option>
+                                </select>
+                                <div class="error-message" id="attendanceSection-error"></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="attendanceSubject">Subject</label>
+                                <select id="attendanceSubject" required>
+                                    <option value="">Select Subject</option>
+                                    <option value="Mathematics">Mathematics</option>
+                                    <option value="Science">Science</option>
+                                    <option value="English">English</option>
+                                    <option value="Social Studies">Social Studies</option>
+                                    <option value="Computer">Computer</option>
+                                </select>
+                                <div class="error-message" id="attendanceSubject-error"></div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <button type="button" class="btn btn-secondary" id="load-students-btn">
+                                    <i class="fas fa-users"></i> Load Students
+                                </button>
+                            </div>
+                            
+                            <div id="attendanceListContainer" class="attendance-list">
+                                <!-- Attendance list will be populated dynamically -->
+                            </div>
+                            
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-primary">Save Attendance</button>
+                                <button type="button" class="btn btn-secondary" id="cancel-attendance-btn">Cancel</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="table-container">
+                        <div class="table-header">
+                            <h3>Attendance Records</h3>
+                            <div class="attendance-controls">
+                                <input type="date" id="attendanceFilterDate" class="search-input">
+                                <select id="attendanceFilterGrade" class="search-input">
+                                    <option value="">All Grades</option>
+                                    <option value="1">Grade 1</option>
+                                    <option value="2">Grade 2</option>
+                                    <option value="3">Grade 3</option>
+                                    <option value="4">Grade 4</option>
+                                    <option value="5">Grade 5</option>
+                                    <option value="6">Grade 6</option>
+                                    <option value="7">Grade 7</option>
+                                    <option value="8">Grade 8</option>
+                                    <option value="9">Grade 9</option>
+                                    <option value="10">Grade 10</option>
+                                    <option value="11">Grade 11</option>
+                                    <option value="12">Grade 12</option>
+                                </select>
+                                <input type="text" id="attendanceSearch" placeholder="Search students..." class="search-input">
+                            </div>
+                        </div>
+                        <div class="table-wrapper">
+                            <table id="attendanceTable" class="data-table attendance-table">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Student Name</th>
+                                        <th>Grade</th>
+                                        <th>Status</th>
+                                        <th>Subject</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="attendanceTableBody">
+                                    <!-- Attendance records will be populated by JavaScript -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Attendance Calendar -->
+                <div class="attendance-calendar">
+                    <div class="calendar-header">
+                        <h3>Attendance Calendar</h3>
+                        <div>
+                            <button class="btn btn-secondary" id="prev-month-btn">
+                                <i class="fas fa-chevron-left"></i>
+                            </button>
+                            <span id="current-month">June 2024</span>
+                            <button class="btn btn-secondary" id="next-month-btn">
+                                <i class="fas fa-chevron-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="calendar-grid" id="calendar-grid">
+                        <!-- Calendar will be populated by JavaScript -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Exams Section -->
+            <section id="exams" class="section">
+                <div class="section-header">
+                    <h2><i class="fas fa-file-alt"></i> Exam Management</h2>
+                    <button class="btn btn-primary" id="add-exam-btn">
+                        <i class="fas fa-plus"></i> Schedule Exam
+                    </button>
+                </div>
+
+                <div class="content-grid">
+                    <div class="form-container">
+                        <form id="examForm" class="form">
+                            <h3 id="exam-form-title">Schedule New Exam</h3>
+                            <div class="form-group">
+                                <label for="examName">Exam Name</label>
+                                <input type="text" id="examName" required>
+                                <div class="error-message" id="examName-error"></div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="examSubject">Subject</label>
+                                    <input type="text" id="examSubject" required>
+                                    <div class="error-message" id="examSubject-error"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="examGrade">Grade</label>
+                                    <select id="examGrade" required>
+                                        <option value="">Select Grade</option>
+                                        <option value="1">Grade 1</option>
+                                        <option value="2">Grade 2</option>
+                                        <option value="3">Grade 3</option>
+                                        <option value="4">Grade 4</option>
+                                        <option value="5">Grade 5</option>
+                                        <option value="6">Grade 6</option>
+                                        <option value="7">Grade 7</option>
+                                        <option value="8">Grade 8</option>
+                                        <option value="9">Grade 9</option>
+                                        <option value="10">Grade 10</option>
+                                        <option value="11">Grade 11</option>
+                                        <option value="12">Grade 12</option>
+                                    </select>
+                                    <div class="error-message" id="examGrade-error"></div>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="examDate">Exam Date</label>
+                                    <input type="date" id="examDate" required>
+                                    <div class="error-message" id="examDate-error"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="examTime">Time</label>
+                                    <input type="time" id="examTime" required>
+                                    <div class="error-message" id="examTime-error"></div>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="examDuration">Duration (hours)</label>
+                                    <input type="number" id="examDuration" min="1" max="8" required>
+                                    <div class="error-message" id="examDuration-error"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="examMaxMarks">Max Marks</label>
+                                    <input type="number" id="examMaxMarks" required>
+                                    <div class="error-message" id="examMaxMarks-error"></div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="examClassroom">Classroom</label>
+                                <input type="text" id="examClassroom" required>
+                                <div class="error-message" id="examClassroom-error"></div>
+                            </div>
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-primary">Schedule Exam</button>
+                                <button type="button" class="btn btn-secondary" id="cancel-exam-btn">Cancel</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="table-container">
+                        <div class="table-header">
+                            <h3>Exam Schedule</h3>
+                            <input type="text" id="examSearch" placeholder="Search exams..." class="search-input">
+                        </div>
+                        <div class="table-wrapper">
+                            <table id="examsTable" class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Exam Name</th>
+                                        <th>Subject</th>
+                                        <th>Grade</th>
+                                        <th>Date</th>
+                                        <th>Time</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="examsTableBody">
+                                    <!-- Exams will be populated by JavaScript -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Marksheets Section -->
+            <section id="marksheets" class="section">
+                <div class="section-header">
+                    <h2><i class="fas fa-award"></i> Marksheet Management</h2>
+                    <button class="btn btn-primary" id="add-marksheet-btn">
+                        <i class="fas fa-plus"></i> Generate Marksheet
+                    </button>
+                </div>
+
+                <div class="content-grid">
+                    <div class="form-container">
+                        <form id="marksheetForm" class="form">
+                            <h3>Generate Marksheet</h3>
+                            <div class="form-group">
+                                <label for="marksheetStudent">Select Student</label>
+                                <select id="marksheetStudent" required>
+                                    <option value="">Select Student</option>
+                                </select>
+                                <div class="error-message" id="marksheetStudent-error"></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="marksheetExam">Select Exam</label>
+                                <select id="marksheetExam" required>
+                                    <option value="">Select Exam</option>
+                                </select>
+                                <div class="error-message" id="marksheetExam-error"></div>
+                            </div>
+                            <div id="subjectMarksContainer">
+                                <!-- Subject marks will be added dynamically -->
+                            </div>
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-primary">Generate Marksheet</button>
+                                <button type="button" class="btn btn-secondary" id="cancel-marksheet-btn">Cancel</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="table-container">
+                        <div class="table-header">
+                            <h3>Generated Marksheets</h3>
+                            <input type="text" id="marksheetSearch" placeholder="Search marksheets..." class="search-input">
+                        </div>
+                        <div class="table-wrapper">
+                            <table id="marksheetsTable" class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Marksheet ID</th>
+                                        <th>Student Name</th>
+                                        <th>Exam</th>
+                                        <th>Total Marks</th>
+                                        <th>Percentage</th>
+                                        <th>Grade</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="marksheetsTableBody">
+                                    <!-- Marksheets will be populated by JavaScript -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Enhanced Marksheet Preview Modal -->
+                <div id="marksheetModal" class="modal">
+                    <div class="modal-content marksheet-preview" style="max-width: 210mm;">
+                        <span class="close">&times;</span>
+                        <div id="marksheetContent" class="marksheet-a4">
+                            <!-- Printable A4 marksheet content will be generated here -->
+                        </div>
+                        <div class="modal-actions no-print">
+                            <div class="marksheet-actions">
+                                <button class="btn btn-primary" id="print-marksheet-btn">
+                                    <i class="fas fa-print"></i> Print Marksheet
+                                </button>
+                                <button class="btn btn-success" id="download-marksheet-btn">
+                                    <i class="fas fa-download"></i> Download as PDF
+                                </button>
+                                <button class="btn btn-secondary" id="close-marksheet-btn">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ID Cards Section -->
+            <section id="id-cards" class="section">
+                <div class="section-header">
+                    <h2><i class="fas fa-id-card"></i> ID Card Management</h2>
+                    <button class="btn btn-primary" id="generate-id-cards-btn">
+                        <i class="fas fa-id-card"></i> Generate All ID Cards
+                    </button>
+                </div>
+
+                <div class="id-cards-grid" id="idCardsContainer">
+                    <!-- ID Cards will be generated here -->
+                </div>
+
+                <!-- ID Card Preview Modal -->
+                <div id="idCardModal" class="modal">
+                    <div class="modal-content id-card-preview">
+                        <span class="close">&times;</span>
+                        <div id="idCardContent">
+                            <!-- ID Card content will be generated here -->
+                        </div>
+                        <div class="modal-actions">
+                            <button class="btn btn-primary" id="print-id-card-btn">
+                                <i class="fas fa-print"></i> Print
+                            </button>
+                            <button class="btn btn-secondary" id="close-id-card-btn">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Pak Model Grammar School. All rights reserved.</p>
+            <p>123 Education Street, Learning City | Phone: (555) 123-4567 | Email: info@pmgs.edu</p>
+        </div>
+    </footer>
+
+    <!-- Toast Notifications -->
+    <div id="toast" class="toast"></div>
+
+    <script>
+        // School Management System - JavaScript
+        // Declare sms in global scope
+        let sms;
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize the application
+            sms = new SchoolManagementSystem();
+            sms.init();
+            
+            // Expose sms to global scope for inline event handlers
+            window.sms = sms;
+        });
+
+        class SchoolManagementSystem {
+            constructor() {
+                this.students = this.loadFromStorage('students') || [];
+                this.teachers = this.loadFromStorage('teachers') || [];
+                this.exams = this.loadFromStorage('exams') || [];
+                this.marksheets = this.loadFromStorage('marksheets') || [];
+                this.attendance = this.loadFromStorage('attendance') || [];
+                this.activities = this.loadFromStorage('activities') || [];
+                this.currentMarksheet = null;
+                this.currentIDCard = null;
+                this.currentMonth = new Date().getMonth();
+                this.currentYear = new Date().getFullYear();
+                this.editingStudentId = null;
+                this.editingTeacherId = null;
+                this.editingExamId = null;
+            }
+
+            init() {
+                this.setupEventListeners();
+                this.loadDashboard();
+                this.renderStudents();
+                this.renderTeachers();
+                this.renderExams();
+                this.renderMarksheets();
+                this.renderAttendance();
+                this.updateStudentSelects();
+                this.updateExamSelects();
+                this.renderCalendar();
+                
+                // Add sample data if empty
+                if (this.students.length === 0) {
+                    this.addSampleData();
+                }
+            }
+
+            // Storage Management
+            saveToStorage(key, data) {
+                try {
+                    localStorage.setItem(key, JSON.stringify(data));
+                    return true;
+                } catch (e) {
+                    console.error('Error saving to localStorage:', e);
+                    this.showToast('Error saving data. Please try again.', 'error');
+                    return false;
+                }
+            }
+
+            loadFromStorage(key) {
+                try {
+                    const data = localStorage.getItem(key);
+                    return data ? JSON.parse(data) : null;
+                } catch (e) {
+                    console.error('Error loading from localStorage:', e);
+                    return null;
+                }
+            }
+
+            // Event Listeners
+            setupEventListeners() {
+                // Navigation
+                document.querySelectorAll('.nav-link').forEach(link => {
+                    link.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        this.showSection(link.getAttribute('href').substring(1));
+                    });
+                });
+
+                // Student Management
+                document.getElementById('add-student-btn').addEventListener('click', () => this.showStudentForm());
+                document.getElementById('cancel-student-btn').addEventListener('click', () => this.resetStudentForm());
+                document.getElementById('studentForm').addEventListener('submit', (e) => this.handleStudentSubmit(e));
+                document.getElementById('studentSearch').addEventListener('input', (e) => this.searchStudents(e.target.value));
+
+                // Teacher Management
+                document.getElementById('add-teacher-btn').addEventListener('click', () => this.showTeacherForm());
+                document.getElementById('cancel-teacher-btn').addEventListener('click', () => this.resetTeacherForm());
+                document.getElementById('teacherForm').addEventListener('submit', (e) => this.handleTeacherSubmit(e));
+                document.getElementById('teacherSearch').addEventListener('input', (e) => this.searchTeachers(e.target.value));
+
+                // Exam Management
+                document.getElementById('add-exam-btn').addEventListener('click', () => this.showExamForm());
+                document.getElementById('cancel-exam-btn').addEventListener('click', () => this.resetExamForm());
+                document.getElementById('examForm').addEventListener('submit', (e) => this.handleExamSubmit(e));
+                document.getElementById('examSearch').addEventListener('input', (e) => this.searchExams(e.target.value));
+
+                // Marksheet Management
+                document.getElementById('add-marksheet-btn').addEventListener('click', () => this.showMarksheetForm());
+                document.getElementById('cancel-marksheet-btn').addEventListener('click', () => this.resetMarksheetForm());
+                document.getElementById('marksheetForm').addEventListener('submit', (e) => this.handleMarksheetSubmit(e));
+                document.getElementById('marksheetSearch').addEventListener('input', (e) => this.searchMarksheets(e.target.value));
+
+                // Attendance Management
+                document.getElementById('take-attendance-btn').addEventListener('click', () => this.showAttendanceForm());
+                document.getElementById('cancel-attendance-btn').addEventListener('click', () => this.resetAttendanceForm());
+                document.getElementById('load-students-btn').addEventListener('click', () => this.loadStudentsForAttendance());
+                document.getElementById('attendanceForm').addEventListener('submit', (e) => this.handleAttendanceSubmit(e));
+                document.getElementById('attendanceSearch').addEventListener('input', (e) => this.searchAttendance(e.target.value));
+                document.getElementById('attendanceFilterDate').addEventListener('change', (e) => this.filterAttendance());
+                document.getElementById('attendanceFilterGrade').addEventListener('change', (e) => this.filterAttendance());
+                
+                // Calendar Navigation
+                document.getElementById('prev-month-btn').addEventListener('click', () => this.changeMonth(-1));
+                document.getElementById('next-month-btn').addEventListener('click', () => this.changeMonth(1));
+
+                // ID Card Management
+                document.getElementById('generate-id-cards-btn').addEventListener('click', () => this.generateAllIDCards());
+
+                // Modal Management
+                document.getElementById('close-marksheet-btn').addEventListener('click', () => this.closeMarksheetModal());
+                document.getElementById('print-marksheet-btn').addEventListener('click', () => this.printMarksheet());
+                document.getElementById('download-marksheet-btn').addEventListener('click', () => this.downloadMarksheetAsPDF());
+                document.getElementById('close-id-card-btn').addEventListener('click', () => this.closeIDCardModal());
+                document.getElementById('print-id-card-btn').addEventListener('click', () => this.printIDCard());
+
+                // Close modals when clicking on X or outside
+                document.querySelectorAll('.close').forEach(closeBtn => {
+                    closeBtn.addEventListener('click', (e) => {
+                        e.target.closest('.modal').style.display = 'none';
+                    });
+                });
+
+                window.addEventListener('click', (e) => {
+                    if (e.target.classList.contains('modal')) {
+                        e.target.style.display = 'none';
+                    }
+                });
+
+                // Set default date for attendance form
+                document.getElementById('attendanceDate').valueAsDate = new Date();
+            }
+
+            // Section Navigation
+            showSection(sectionId) {
+                // Hide all sections
+                document.querySelectorAll('.section').forEach(section => {
+                    section.classList.remove('active');
+                });
+
+                // Remove active class from all nav links
+                document.querySelectorAll('.nav-link').forEach(link => {
+                    link.classList.remove('active');
+                });
+
+                // Show selected section
+                document.getElementById(sectionId).classList.add('active');
+
+                // Add active class to clicked nav link
+                document.querySelector(`[href="#${sectionId}"]`).classList.add('active');
+
+                // If attendance section, update stats
+                if (sectionId === 'attendance') {
+                    this.updateAttendanceStats();
+                }
+            }
+
+            // Dashboard
+            loadDashboard() {
+                document.getElementById('total-students').textContent = this.students.length;
+                document.getElementById('total-teachers').textContent = this.teachers.length;
+                document.getElementById('total-exams').textContent = this.exams.length;
+                
+                // Calculate average attendance
+                const today = new Date().toISOString().split('T')[0];
+                const todayAttendance = this.attendance.filter(a => a.date === today);
+                if (todayAttendance.length > 0) {
+                    const presentCount = todayAttendance.filter(a => a.status === 'Present').length;
+                    const attendanceRate = Math.round((presentCount / todayAttendance.length) * 100);
+                    document.getElementById('attendance-rate').textContent = `${attendanceRate}%`;
+                } else {
+                    document.getElementById('attendance-rate').textContent = '0%';
+                }
+
+                this.renderActivities();
+            }
+
+            renderActivities() {
+                const activitiesList = document.getElementById('activities-list');
+                const recentActivities = this.activities.slice(-5).reverse();
+
+                activitiesList.innerHTML = recentActivities.map(activity => `
+                    <div class="activity-item">
+                        <div class="activity-icon">
+                            <i class="fas ${activity.icon}"></i>
+                        </div>
+                        <div class="activity-content">
+                            <p>${activity.message}</p>
+                            <small>${new Date(activity.timestamp).toLocaleString()}</small>
+                        </div>
+                    </div>
+                `).join('');
+
+                if (recentActivities.length === 0) {
+                    activitiesList.innerHTML = '<p class="no-data">No recent activities</p>';
+                }
+            }
+
+            addActivity(message, icon = 'fa-info-circle') {
+                const activity = {
+                    message,
+                    icon,
+                    timestamp: new Date().toISOString()
+                };
+
+                this.activities.push(activity);
+                this.saveToStorage('activities', this.activities);
+                this.renderActivities();
+            }
+
+            // Student Management
+            showStudentForm() {
+                document.getElementById('student-form-title').textContent = 'Add New Student';
+                this.resetStudentForm();
+            }
+
+            resetStudentForm() {
+                document.getElementById('studentForm').reset();
+                this.clearFormErrors('studentForm');
+                this.editingStudentId = null;
+            }
+
+            validateStudentForm() {
+                let isValid = true;
+                this.clearFormErrors('studentForm');
+
+                // Name validation
+                const name = document.getElementById('studentName').value.trim();
+                if (!name) {
+                    this.showFieldError('studentName', 'Student name is required');
+                    isValid = false;
+                }
+
+                // Grade validation
+                const grade = document.getElementById('studentGrade').value;
+                if (!grade) {
+                    this.showFieldError('studentGrade', 'Please select a grade');
+                    isValid = false;
+                }
+
+                // Section validation
+                const section = document.getElementById('studentSection').value;
+                if (!section) {
+                    this.showFieldError('studentSection', 'Please select a section');
+                    isValid = false;
+                }
+
+                // Email validation
+                const email = document.getElementById('studentEmail').value.trim();
+                if (!email) {
+                    this.showFieldError('studentEmail', 'Email is required');
+                    isValid = false;
+                } else if (!this.isValidEmail(email)) {
+                    this.showFieldError('studentEmail', 'Please enter a valid email address');
+                    isValid = false;
+                }
+
+                // Phone validation
+                const phone = document.getElementById('studentPhone').value.trim();
+                if (!phone) {
+                    this.showFieldError('studentPhone', 'Phone number is required');
+                    isValid = false;
+                }
+
+                // Parent name validation
+                const parentName = document.getElementById('parentName').value.trim();
+                if (!parentName) {
+                    this.showFieldError('parentName', 'Parent name is required');
+                    isValid = false;
+                }
+
+                return isValid;
+            }
+
+            handleStudentSubmit(e) {
+                e.preventDefault();
+                
+                if (!this.validateStudentForm()) {
+                    return;
+                }
+
+                const studentData = {
+                    name: document.getElementById('studentName').value.trim(),
+                    grade: document.getElementById('studentGrade').value,
+                    section: document.getElementById('studentSection').value,
+                    email: document.getElementById('studentEmail').value.trim(),
+                    phone: document.getElementById('studentPhone').value.trim(),
+                    parentName: document.getElementById('parentName').value.trim(),
+                    address: document.getElementById('studentAddress').value.trim(),
+                };
+
+                if (this.editingStudentId) {
+                    // Update existing student
+                    const studentIndex = this.students.findIndex(s => s.id === this.editingStudentId);
+                    if (studentIndex !== -1) {
+                        this.students[studentIndex] = { ...this.students[studentIndex], ...studentData };
+                        this.showToast('Student updated successfully!', 'success');
+                        this.addActivity(`Student updated: ${studentData.name}`, 'fa-user-edit');
+                    }
+                } else {
+                    // Add new student
+                    const student = {
+                        id: `STU${Date.now()}`,
+                        ...studentData,
+                        enrollmentDate: new Date().toISOString()
+                    };
+
+                    this.students.push(student);
+                    this.showToast('Student added successfully!', 'success');
+                    this.addActivity(`New student enrolled: ${student.name}`, 'fa-user-plus');
+                }
+
+                if (this.saveToStorage('students', this.students)) {
+                    this.renderStudents();
+                    this.updateStudentSelects();
+                    this.resetStudentForm();
+                    this.loadDashboard();
+                }
+            }
+
+            renderStudents(filteredStudents = null) {
+                const studentsToRender = filteredStudents || this.students;
+                const tbody = document.getElementById('studentsTableBody');
+                
+                tbody.innerHTML = studentsToRender.map(student => `
+                    <tr>
+                        <td>${student.id}</td>
+                        <td>${student.name}</td>
+                        <td>Grade ${student.grade}${student.section}</td>
+                        <td>${student.email}</td>
+                        <td>${student.phone}</td>
+                        <td class="action-buttons">
+                            <button class="action-btn view" onclick="window.sms.viewStudent('${student.id}')">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                            <button class="action-btn edit" onclick="window.sms.editStudent('${student.id}')">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="action-btn delete" onclick="window.sms.deleteStudent('${student.id}')">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                `).join('');
+
+                if (studentsToRender.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="6" class="no-data">No students found</td></tr>';
+                }
+            }
+
+            searchStudents(query) {
+                const filtered = this.students.filter(student => 
+                    student.name.toLowerCase().includes(query.toLowerCase()) ||
+                    student.id.toLowerCase().includes(query.toLowerCase()) ||
+                    student.email.toLowerCase().includes(query.toLowerCase())
+                );
+                this.renderStudents(filtered);
+            }
+
+            viewStudent(studentId) {
+                const student = this.students.find(s => s.id === studentId);
+                if (student) {
+                    alert(`Student Details:\n\nName: ${student.name}\nID: ${student.id}\nGrade: ${student.grade}${student.section}\nEmail: ${student.email}\nPhone: ${student.phone}\nParent: ${student.parentName}\nAddress: ${student.address}`);
+                }
+            }
+
+            editStudent(studentId) {
+                const student = this.students.find(s => s.id === studentId);
+                if (student) {
+                    document.getElementById('student-form-title').textContent = 'Edit Student';
+                    document.getElementById('studentName').value = student.name;
+                    document.getElementById('studentGrade').value = student.grade;
+                    document.getElementById('studentSection').value = student.section;
+                    document.getElementById('studentEmail').value = student.email;
+                    document.getElementById('studentPhone').value = student.phone;
+                    document.getElementById('parentName').value = student.parentName;
+                    document.getElementById('studentAddress').value = student.address;
+                    this.editingStudentId = studentId;
+                    
+                    // Scroll to form
+                    document.getElementById('studentForm').scrollIntoView({ behavior: 'smooth' });
+                }
+            }
+
+            deleteStudent(studentId) {
+                if (confirm('Are you sure you want to delete this student?')) {
+                    const student = this.students.find(s => s.id === studentId);
+                    this.students = this.students.filter(s => s.id !== studentId);
+                    if (this.saveToStorage('students', this.students)) {
+                        this.renderStudents();
+                        this.updateStudentSelects();
+                        this.showToast('Student deleted successfully!', 'success');
+                        this.addActivity(`Student deleted: ${student.name}`, 'fa-user-minus');
+                        this.loadDashboard();
+                    }
+                }
+            }
+
+            // Teacher Management
+            showTeacherForm() {
+                document.getElementById('teacher-form-title').textContent = 'Add New Teacher';
+                this.resetTeacherForm();
+            }
+
+            resetTeacherForm() {
+                document.getElementById('teacherForm').reset();
+                this.clearFormErrors('teacherForm');
+                this.editingTeacherId = null;
+            }
+
+            validateTeacherForm() {
+                let isValid = true;
+                this.clearFormErrors('teacherForm');
+
+                // Name validation
+                const name = document.getElementById('teacherName').value.trim();
+                if (!name) {
+                    this.showFieldError('teacherName', 'Teacher name is required');
+                    isValid = false;
+                }
+
+                // Department validation
+                const department = document.getElementById('teacherDepartment').value;
+                if (!department) {
+                    this.showFieldError('teacherDepartment', 'Please select a department');
+                    isValid = false;
+                }
+
+                // Email validation
+                const email = document.getElementById('teacherEmail').value.trim();
+                if (!email) {
+                    this.showFieldError('teacherEmail', 'Email is required');
+                    isValid = false;
+                } else if (!this.isValidEmail(email)) {
+                    this.showFieldError('teacherEmail', 'Please enter a valid email address');
+                    isValid = false;
+                }
+
+                // Phone validation
+                const phone = document.getElementById('teacherPhone').value.trim();
+                if (!phone) {
+                    this.showFieldError('teacherPhone', 'Phone number is required');
+                    isValid = false;
+                }
+
+                // Qualification validation
+                const qualification = document.getElementById('teacherQualification').value.trim();
+                if (!qualification) {
+                    this.showFieldError('teacherQualification', 'Qualification is required');
+                    isValid = false;
+                }
+
+                // Salary validation
+                const salary = document.getElementById('teacherSalary').value.trim();
+                if (!salary) {
+                    this.showFieldError('teacherSalary', 'Salary is required');
+                    isValid = false;
+                } else if (isNaN(salary) || parseFloat(salary) <= 0) {
+                    this.showFieldError('teacherSalary', 'Please enter a valid salary');
+                    isValid = false;
+                }
+
+                return isValid;
+            }
+
+            handleTeacherSubmit(e) {
+                e.preventDefault();
+                
+                if (!this.validateTeacherForm()) {
+                    return;
+                }
+
+                const teacherData = {
+                    name: document.getElementById('teacherName').value.trim(),
+                    department: document.getElementById('teacherDepartment').value,
+                    email: document.getElementById('teacherEmail').value.trim(),
+                    phone: document.getElementById('teacherPhone').value.trim(),
+                    qualification: document.getElementById('teacherQualification').value.trim(),
+                    salary: document.getElementById('teacherSalary').value,
+                };
+
+                if (this.editingTeacherId) {
+                    // Update existing teacher
+                    const teacherIndex = this.teachers.findIndex(t => t.id === this.editingTeacherId);
+                    if (teacherIndex !== -1) {
+                        this.teachers[teacherIndex] = { ...this.teachers[teacherIndex], ...teacherData };
+                        this.showToast('Teacher updated successfully!', 'success');
+                        this.addActivity(`Teacher updated: ${teacherData.name}`, 'fa-user-edit');
+                    }
+                } else {
+                    // Add new teacher
+                    const teacher = {
+                        id: `TCH${Date.now()}`,
+                        ...teacherData,
+                        joinDate: new Date().toISOString()
+                    };
+
+                    this.teachers.push(teacher);
+                    this.showToast('Teacher added successfully!', 'success');
+                    this.addActivity(`New teacher joined: ${teacher.name}`, 'fa-user-tie');
+                }
+
+                if (this.saveToStorage('teachers', this.teachers)) {
+                    this.renderTeachers();
+                    this.resetTeacherForm();
+                    this.loadDashboard();
+                }
+            }
+
+            renderTeachers(filteredTeachers = null) {
+                const teachersToRender = filteredTeachers || this.teachers;
+                const tbody = document.getElementById('teachersTableBody');
+                
+                tbody.innerHTML = teachersToRender.map(teacher => `
+                    <tr>
+                        <td>${teacher.id}</td>
+                        <td>${teacher.name}</td>
+                        <td>${teacher.department}</td>
+                        <td>${teacher.email}</td>
+                        <td>${teacher.qualification}</td>
+                        <td class="action-buttons">
+                            <button class="action-btn view" onclick="window.sms.viewTeacher('${teacher.id}')">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                            <button class="action-btn edit" onclick="window.sms.editTeacher('${teacher.id}')">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="action-btn delete" onclick="window.sms.deleteTeacher('${teacher.id}')">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                `).join('');
+
+                if (teachersToRender.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="6" class="no-data">No teachers found</td></tr>';
+                }
+            }
+
+            searchTeachers(query) {
+                const filtered = this.teachers.filter(teacher => 
+                    teacher.name.toLowerCase().includes(query.toLowerCase()) ||
+                    teacher.id.toLowerCase().includes(query.toLowerCase()) ||
+                    teacher.department.toLowerCase().includes(query.toLowerCase())
+                );
+                this.renderTeachers(filtered);
+            }
+
+            viewTeacher(teacherId) {
+                const teacher = this.teachers.find(t => t.id === teacherId);
+                if (teacher) {
+                    alert(`Teacher Details:\n\nName: ${teacher.name}\nID: ${teacher.id}\nDepartment: ${teacher.department}\nEmail: ${teacher.email}\nQualification: ${teacher.qualification}\nSalary: $${teacher.salary}`);
+                }
+            }
+
+            editTeacher(teacherId) {
+                const teacher = this.teachers.find(t => t.id === teacherId);
+                if (teacher) {
+                    document.getElementById('teacher-form-title').textContent = 'Edit Teacher';
+                    document.getElementById('teacherName').value = teacher.name;
+                    document.getElementById('teacherDepartment').value = teacher.department;
+                    document.getElementById('teacherEmail').value = teacher.email;
+                    document.getElementById('teacherPhone').value = teacher.phone;
+                    document.getElementById('teacherQualification').value = teacher.qualification;
+                    document.getElementById('teacherSalary').value = teacher.salary;
+                    this.editingTeacherId = teacherId;
+                    
+                    // Scroll to form
+                    document.getElementById('teacherForm').scrollIntoView({ behavior: 'smooth' });
+                }
+            }
+
+            deleteTeacher(teacherId) {
+                if (confirm('Are you sure you want to delete this teacher?')) {
+                    const teacher = this.teachers.find(t => t.id === teacherId);
+                    this.teachers = this.teachers.filter(t => t.id !== teacherId);
+                    if (this.saveToStorage('teachers', this.teachers)) {
+                        this.renderTeachers();
+                        this.showToast('Teacher deleted successfully!', 'success');
+                        this.addActivity(`Teacher deleted: ${teacher.name}`, 'fa-user-times');
+                        this.loadDashboard();
+                    }
+                }
+            }
+
+            // Exam Management
+            showExamForm() {
+                document.getElementById('exam-form-title').textContent = 'Schedule New Exam';
+                this.resetExamForm();
+            }
+
+            resetExamForm() {
+                document.getElementById('examForm').reset();
+                this.clearFormErrors('examForm');
+                this.editingExamId = null;
+            }
+
+            validateExamForm() {
+                let isValid = true;
+                this.clearFormErrors('examForm');
+
+                // Exam name validation
+                const examName = document.getElementById('examName').value.trim();
+                if (!examName) {
+                    this.showFieldError('examName', 'Exam name is required');
+                    isValid = false;
+                }
+
+                // Subject validation
+                const subject = document.getElementById('examSubject').value.trim();
+                if (!subject) {
+                    this.showFieldError('examSubject', 'Subject is required');
+                    isValid = false;
+                }
+
+                // Grade validation
+                const grade = document.getElementById('examGrade').value;
+                if (!grade) {
+                    this.showFieldError('examGrade', 'Please select a grade');
+                    isValid = false;
+                }
+
+                // Date validation
+                const examDate = document.getElementById('examDate').value;
+                if (!examDate) {
+                    this.showFieldError('examDate', 'Exam date is required');
+                    isValid = false;
+                } else {
+                    const selectedDate = new Date(examDate);
+                    const today = new Date();
+                    today.setHours(0, 0, 0, 0);
+                    if (selectedDate < today) {
+                        this.showFieldError('examDate', 'Exam date cannot be in the past');
+                        isValid = false;
+                    }
+                }
+
+                // Time validation
+                const time = document.getElementById('examTime').value;
+                if (!time) {
+                    this.showFieldError('examTime', 'Exam time is required');
+                    isValid = false;
+                }
+
+                // Duration validation
+                const duration = document.getElementById('examDuration').value;
+                if (!duration) {
+                    this.showFieldError('examDuration', 'Duration is required');
+                    isValid = false;
+                } else if (isNaN(duration) || parseFloat(duration) <= 0) {
+                    this.showFieldError('examDuration', 'Please enter a valid duration');
+                    isValid = false;
+                }
+
+                // Max marks validation
+                const maxMarks = document.getElementById('examMaxMarks').value;
+                if (!maxMarks) {
+                    this.showFieldError('examMaxMarks', 'Max marks is required');
+                    isValid = false;
+                } else if (isNaN(maxMarks) || parseFloat(maxMarks) <= 0) {
+                    this.showFieldError('examMaxMarks', 'Please enter valid marks');
+                    isValid = false;
+                }
+
+                // Classroom validation
+                const classroom = document.getElementById('examClassroom').value.trim();
+                if (!classroom) {
+                    this.showFieldError('examClassroom', 'Classroom is required');
+                    isValid = false;
+                }
+
+                return isValid;
+            }
+
+            handleExamSubmit(e) {
+                e.preventDefault();
+                
+                if (!this.validateExamForm()) {
+                    return;
+                }
+
+                const examData = {
+                    name: document.getElementById('examName').value.trim(),
+                    subject: document.getElementById('examSubject').value.trim(),
+                    grade: document.getElementById('examGrade').value,
+                    date: document.getElementById('examDate').value,
+                    time: document.getElementById('examTime').value,
+                    duration: document.getElementById('examDuration').value,
+                    maxMarks: document.getElementById('examMaxMarks').value,
+                    classroom: document.getElementById('examClassroom').value.trim(),
+                };
+
+                if (this.editingExamId) {
+                    // Update existing exam
+                    const examIndex = this.exams.findIndex(e => e.id === this.editingExamId);
+                    if (examIndex !== -1) {
+                        this.exams[examIndex] = { ...this.exams[examIndex], ...examData };
+                        this.showToast('Exam updated successfully!', 'success');
+                        this.addActivity(`Exam updated: ${examData.name}`, 'fa-calendar-check');
+                    }
+                } else {
+                    // Add new exam
+                    const exam = {
+                        id: `EXAM${Date.now()}`,
+                        ...examData,
+                        scheduledDate: new Date().toISOString()
+                    };
+
+                    this.exams.push(exam);
+                    this.showToast('Exam scheduled successfully!', 'success');
+                    this.addActivity(`New exam scheduled: ${exam.name}`, 'fa-calendar-plus');
+                }
+
+                if (this.saveToStorage('exams', this.exams)) {
+                    this.renderExams();
+                    this.updateExamSelects();
+                    this.resetExamForm();
+                    this.loadDashboard();
+                }
+            }
+
+            renderExams(filteredExams = null) {
+                const examsToRender = filteredExams || this.exams;
+                const tbody = document.getElementById('examsTableBody');
+                
+                tbody.innerHTML = examsToRender.map(exam => `
+                    <tr>
+                        <td>${exam.id}</td>
+                        <td>${exam.name}</td>
+                        <td>${exam.subject}</td>
+                        <td>Grade ${exam.grade}</td>
+                        <td>${new Date(exam.date).toLocaleDateString()}</td>
+                        <td>${exam.time}</td>
+                        <td class="action-buttons">
+                            <button class="action-btn view" onclick="window.sms.viewExam('${exam.id}')">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                            <button class="action-btn edit" onclick="window.sms.editExam('${exam.id}')">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="action-btn delete" onclick="window.sms.deleteExam('${exam.id}')">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                `).join('');
+
+                if (examsToRender.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="7" class="no-data">No exams found</td></tr>';
+                }
+            }
+
+            searchExams(query) {
+                const filtered = this.exams.filter(exam => 
+                    exam.name.toLowerCase().includes(query.toLowerCase()) ||
+                    exam.id.toLowerCase().includes(query.toLowerCase()) ||
+                    exam.subject.toLowerCase().includes(query.toLowerCase())
+                );
+                this.renderExams(filtered);
+            }
+
+            viewExam(examId) {
+                const exam = this.exams.find(e => e.id === examId);
+                if (exam) {
+                    alert(`Exam Details:\n\nName: ${exam.name}\nID: ${exam.id}\nSubject: ${exam.subject}\nGrade: ${exam.grade}\nDate: ${new Date(exam.date).toLocaleDateString()}\nTime: ${exam.time}\nDuration: ${exam.duration} hours\nMax Marks: ${exam.maxMarks}\nClassroom: ${exam.classroom}`);
+                }
+            }
+
+            editExam(examId) {
+                const exam = this.exams.find(e => e.id === examId);
+                if (exam) {
+                    document.getElementById('exam-form-title').textContent = 'Edit Exam';
+                    document.getElementById('examName').value = exam.name;
+                    document.getElementById('examSubject').value = exam.subject;
+                    document.getElementById('examGrade').value = exam.grade;
+                    document.getElementById('examDate').value = exam.date;
+                    document.getElementById('examTime').value = exam.time;
+                    document.getElementById('examDuration').value = exam.duration;
+                    document.getElementById('examMaxMarks').value = exam.maxMarks;
+                    document.getElementById('examClassroom').value = exam.classroom;
+                    this.editingExamId = examId;
+                    
+                    // Scroll to form
+                    document.getElementById('examForm').scrollIntoView({ behavior: 'smooth' });
+                }
+            }
+
+            deleteExam(examId) {
+                if (confirm('Are you sure you want to delete this exam?')) {
+                    const exam = this.exams.find(e => e.id === examId);
+                    this.exams = this.exams.filter(e => e.id !== examId);
+                    if (this.saveToStorage('exams', this.exams)) {
+                        this.renderExams();
+                        this.updateExamSelects();
+                        this.showToast('Exam deleted successfully!', 'success');
+                        this.addActivity(`Exam deleted: ${exam.name}`, 'fa-calendar-minus');
+                        this.loadDashboard();
+                    }
+                }
+            }
+
+            // Marksheet Management
+            showMarksheetForm() {
+                this.resetMarksheetForm();
+                this.updateSubjectFields();
+            }
+
+            resetMarksheetForm() {
+                document.getElementById('marksheetForm').reset();
+                document.getElementById('subjectMarksContainer').innerHTML = '';
+                this.clearFormErrors('marksheetForm');
+            }
+
+            updateStudentSelects() {
+                const studentSelects = document.querySelectorAll('#marksheetStudent');
+                studentSelects.forEach(select => {
+                    select.innerHTML = '<option value="">Select Student</option>' +
+                        this.students.map(student => 
+                            `<option value="${student.id}">${student.name} (Grade ${student.grade}${student.section})</option>`
+                        ).join('');
+                });
+            }
+
+            updateExamSelects() {
+                const examSelects = document.querySelectorAll('#marksheetExam');
+                examSelects.forEach(select => {
+                    select.innerHTML = '<option value="">Select Exam</option>' +
+                        this.exams.map(exam => 
+                            `<option value="${exam.id}">${exam.name} - ${exam.subject}</option>`
+                        ).join('');
+                });
+            }
+
+            updateSubjectFields() {
+                const container = document.getElementById('subjectMarksContainer');
+                const subjects = ['Mathematics', 'Science', 'English', 'Social Studies', 'Computer', 'Arts', 'Physical Education'];
+                
+                container.innerHTML = subjects.map(subject => `
+                    <div class="form-group">
+                        <label for="marks-${subject.toLowerCase()}">${subject} Marks</label>
+                        <input type="number" id="marks-${subject.toLowerCase()}" min="0" max="100" placeholder="Enter marks">
+                    </div>
+                `).join('');
+            }
+
+            validateMarksheetForm() {
+                let isValid = true;
+                this.clearFormErrors('marksheetForm');
+
+                // Student validation
+                const studentId = document.getElementById('marksheetStudent').value;
+                if (!studentId) {
+                    this.showFieldError('marksheetStudent', 'Please select a student');
+                    isValid = false;
+                }
+
+                // Exam validation
+                const examId = document.getElementById('marksheetExam').value;
+                if (!examId) {
+                    this.showFieldError('marksheetExam', 'Please select an exam');
+                    isValid = false;
+                }
+
+                // Check if at least one subject has marks
+                const subjects = ['mathematics', 'science', 'english', 'social studies', 'computer', 'arts', 'physical education'];
+                let hasMarks = false;
+                
+                subjects.forEach(subject => {
+                    const marks = parseInt(document.getElementById(`marks-${subject}`).value) || 0;
+                    if (marks > 0) {
+                        hasMarks = true;
+                    }
+                });
+
+                if (!hasMarks) {
+                    this.showToast('Please enter marks for at least one subject!', 'error');
+                    isValid = false;
+                }
+
+                return isValid;
+            }
+
+            handleMarksheetSubmit(e) {
+                e.preventDefault();
+                
+                if (!this.validateMarksheetForm()) {
+                    return;
+                }
+
+                const studentId = document.getElementById('marksheetStudent').value;
+                const examId = document.getElementById('marksheetExam').value;
+                
+                const student = this.students.find(s => s.id === studentId);
+                const exam = this.exams.find(e => e.id === examId);
+
+                // Collect subject marks
+                const subjectMarks = {};
+                const subjects = ['mathematics', 'science', 'english', 'social studies', 'computer', 'arts', 'physical education'];
+                let totalMarks = 0;
+                let subjectCount = 0;
+
+                subjects.forEach(subject => {
+                    const marks = parseInt(document.getElementById(`marks-${subject}`).value) || 0;
+                    if (marks > 0) {
+                        subjectMarks[subject] = marks;
+                        totalMarks += marks;
+                        subjectCount++;
+                    }
+                });
+
+                const percentage = (totalMarks / (subjectCount * 100)) * 100;
+                const grade = this.calculateGrade(percentage);
+
+                const marksheet = {
+                    id: `MS${Date.now()}`,
+                    studentId,
+                    examId,
+                    studentName: student.name,
+                    examName: exam.name,
+                    subjectMarks,
+                    totalMarks,
+                    percentage: Math.round(percentage * 100) / 100,
+                    grade,
+                    issueDate: new Date().toISOString()
+                };
+
+                this.marksheets.push(marksheet);
+                if (this.saveToStorage('marksheets', this.marksheets)) {
+                    this.renderMarksheets();
+                    this.resetMarksheetForm();
+                    
+                    this.showToast('Marksheet generated successfully!', 'success');
+                    this.addActivity(`Marksheet generated for ${student.name}`, 'fa-file-contract');
+                    this.loadDashboard();
+                }
+            }
+
+            calculateGrade(percentage) {
+                if (percentage >= 90) return 'A+';
+                if (percentage >= 80) return 'A';
+                if (percentage >= 70) return 'B+';
+                if (percentage >= 60) return 'B';
+                if (percentage >= 50) return 'C';
+                if (percentage >= 40) return 'D';
+                return 'F';
+            }
+
+            renderMarksheets(filteredMarksheets = null) {
+                const marksheetsToRender = filteredMarksheets || this.marksheets;
+                const tbody = document.getElementById('marksheetsTableBody');
+                
+                tbody.innerHTML = marksheetsToRender.map(marksheet => `
+                    <tr>
+                        <td>${marksheet.id}</td>
+                        <td>${marksheet.studentName}</td>
+                        <td>${marksheet.examName}</td>
+                        <td>${marksheet.totalMarks}</td>
+                        <td>${marksheet.percentage}%</td>
+                        <td>${marksheet.grade}</td>
+                        <td class="action-buttons">
+                            <button class="action-btn view" onclick="window.sms.viewMarksheet('${marksheet.id}')">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                            <button class="action-btn delete" onclick="window.sms.deleteMarksheet('${marksheet.id}')">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                `).join('');
+
+                if (marksheetsToRender.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="7" class="no-data">No marksheets found</td></tr>';
+                }
+            }
+
+            searchMarksheets(query) {
+                const filtered = this.marksheets.filter(marksheet => 
+                    marksheet.studentName.toLowerCase().includes(query.toLowerCase()) ||
+                    marksheet.id.toLowerCase().includes(query.toLowerCase()) ||
+                    marksheet.examName.toLowerCase().includes(query.toLowerCase())
+                );
+                this.renderMarksheets(filtered);
+            }
+
+            viewMarksheet(marksheetId) {
+                const marksheet = this.marksheets.find(m => m.id === marksheetId);
+                if (marksheet) {
+                    this.showMarksheetModal(marksheet);
+                }
+            }
+
+            showMarksheetModal(marksheet) {
+                const student = this.students.find(s => s.id === marksheet.studentId);
+                const exam = this.exams.find(e => e.id === marksheet.examId);
+                
+                // Calculate additional statistics
+                const totalSubjects = Object.keys(marksheet.subjectMarks).length;
+                const maxPossibleMarks = totalSubjects * 100;
+                const percentage = marksheet.percentage;
+                const grade = marksheet.grade;
+                const remarks = this.getRemarks(grade);
+
+                const content = `
+                    <div class="marksheet-header">
+                        <div class="school-name">Pak Model Grammar School</div>
+                        <div class="school-address">123 Education Street, Learning City, Pakistan</div>
+                        <div class="school-contact">Phone: (555) 123-4567 | Email: info@pmgs.edu | Website: www.pmgs.edu.pk</div>
+                    </div>
+                    
+                    <div class="marksheet-title">ACADEMIC MARKSHEET</div>
+                    
+                    <div class="student-info">
+                        <div>
+                            <div class="info-item">
+                                <span class="info-label">Student Name:</span>
+                                <span>${student.name}</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Student ID:</span>
+                                <span>${student.id}</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Father's Name:</span>
+                                <span>${student.parentName}</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Date of Birth:</span>
+                                <span>${student.dob || 'Not specified'}</span>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="info-item">
+                                <span class="info-label">Roll No:</span>
+                                <span>${student.id.substring(3)}</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Grade & Section:</span>
+                                <span>${student.grade}-${student.section}</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Academic Year:</span>
+                                <span>${new Date().getFullYear()}-${new Date().getFullYear() + 1}</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Exam Date:</span>
+                                <span>${new Date(marksheet.issueDate).toLocaleDateString()}</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <table class="marks-table">
+                        <thead>
+                            <tr>
+                                <th>Subject</th>
+                                <th>Maximum Marks</th>
+                                <th>Marks Obtained</th>
+                                <th>Grade</th>
+                                <th>Remarks</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${Object.entries(marksheet.subjectMarks).map(([subject, marks]) => `
+                                <tr>
+                                    <td>${subject.charAt(0).toUpperCase() + subject.slice(1)}</td>
+                                    <td>100</td>
+                                    <td>${marks}</td>
+                                    <td>${this.calculateGrade(marks)}</td>
+                                    <td>${this.getRemarks(this.calculateGrade(marks))}</td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                    
+                    <div class="summary">
+                        <div class="summary-item">
+                            <div class="summary-label">Total Subjects</div>
+                            <div class="summary-value">${totalSubjects}</div>
+                        </div>
+                        <div class="summary-item">
+                            <div class="summary-label">Maximum Marks</div>
+                            <div class="summary-value">${maxPossibleMarks}</div>
+                        </div>
+                        <div class="summary-item">
+                            <div class="summary-label">Obtained Marks</div>
+                            <div class="summary-value">${marksheet.totalMarks}</div>
+                        </div>
+                        <div class="summary-item">
+                            <div class="summary-label">Percentage</div>
+                            <div class="summary-value">${percentage}%</div>
+                        </div>
+                    </div>
+                    
+                    <div class="summary">
+                        <div class="summary-item">
+                            <div class="summary-label">Overall Grade</div>
+                            <div class="summary-value">${grade}</div>
+                        </div>
+                        <div class="summary-item">
+                            <div class="summary-label">Result</div>
+                            <div class="summary-value">${grade === 'F' ? 'Fail' : 'Pass'}</div>
+                        </div>
+                        <div class="summary-item">
+                            <div class="summary-label">Rank</div>
+                            <div class="summary-value">${this.calculateRank(marksheet)}</div>
+                        </div>
+                        <div class="summary-item">
+                            <div class="summary-label">Attendance</div>
+                            <div class="summary-value">${this.calculateAttendance(student.id)}%</div>
+                        </div>
+                    </div>
+                    
+                    <div class="remarks">
+                        <div class="remarks-title">Remarks:</div>
+                        <div>${remarks}</div>
+                    </div>
+                    
+                    <div class="signatures">
+                        <div class="signature-box">
+                            <div class="signature-line"></div>
+                            <div class="signature-name">Class Teacher</div>
+                            <div class="signature-title">Pak Model Grammar School</div>
+                        </div>
+                        <div class="signature-box">
+                            <div class="signature-line"></div>
+                            <div class="signature-name">Principal</div>
+                            <div class="signature-title">Pak Model Grammar School</div>
+                        </div>
+                    </div>
+                    
+                    <div class="watermark">PMGS</div>
+                `;
+
+                document.getElementById('marksheetContent').innerHTML = content;
+                document.getElementById('marksheetModal').style.display = 'block';
+                this.currentMarksheet = marksheet;
+            }
+
+            getRemarks(grade) {
+                switch(grade) {
+                    case 'A+': return 'Excellent';
+                    case 'A': return 'Very Good';
+                    case 'B+': return 'Good';
+                    case 'B': return 'Satisfactory';
+                    case 'C': return 'Average';
+                    case 'D': return 'Needs Improvement';
+                    default: return 'Fail';
+                }
+            }
+
+            calculateRank(marksheet) {
+                // This is a simplified rank calculation
+                // In a real system, you would compare with other students' marksheets
+                const percentage = marksheet.percentage;
+                if (percentage >= 90) return '1st';
+                if (percentage >= 80) return '2nd';
+                if (percentage >= 70) return '3rd';
+                if (percentage >= 60) return '4th';
+                if (percentage >= 50) return '5th';
+                return 'Not Ranked';
+            }
+            
+            calculateAttendance(studentId) {
+                // Calculate attendance percentage for the student
+                const studentAttendance = this.attendance.filter(a => a.studentId === studentId);
+                if (studentAttendance.length === 0) return 0;
+                
+                const presentCount = studentAttendance.filter(a => a.status === 'Present').length;
+                return Math.round((presentCount / studentAttendance.length) * 100);
+            }
+
+            closeMarksheetModal() {
+                document.getElementById('marksheetModal').style.display = 'none';
+                this.currentMarksheet = null;
+            }
+
+            printMarksheet() {
+                window.print();
+            }
+
+            downloadMarksheetAsPDF() {
+                // This would require a PDF generation library in a real implementation
+                // For now, we'll just open the print dialog
+                this.showToast('PDF download functionality would be implemented with a server-side component or JavaScript library.', 'info');
+            }
+
+            deleteMarksheet(marksheetId) {
+                if (confirm('Are you sure you want to delete this marksheet?')) {
+                    const marksheet = this.marksheets.find(m => m.id === marksheetId);
+                    this.marksheets = this.marksheets.filter(m => m.id !== marksheetId);
+                    if (this.saveToStorage('marksheets', this.marksheets)) {
+                        this.renderMarksheets();
+                        this.showToast('Marksheet deleted successfully!', 'success');
+                        this.addActivity(`Marksheet deleted for ${marksheet.studentName}`, 'fa-file-times');
+                        this.loadDashboard();
+                    }
+                }
+            }
+
+            // Attendance Management
+            showAttendanceForm() {
+                this.resetAttendanceForm();
+                // Set today's date as default
+                document.getElementById('attendanceDate').valueAsDate = new Date();
+            }
+
+            resetAttendanceForm() {
+                document.getElementById('attendanceForm').reset();
+                document.getElementById('attendanceListContainer').innerHTML = '';
+                document.getElementById('attendanceDate').valueAsDate = new Date();
+                this.clearFormErrors('attendanceForm');
+            }
+
+            validateAttendanceForm() {
+                let isValid = true;
+                this.clearFormErrors('attendanceForm');
+
+                // Date validation
+                const date = document.getElementById('attendanceDate').value;
+                if (!date) {
+                    this.showFieldError('attendanceDate', 'Date is required');
+                    isValid = false;
+                }
+
+                // Grade validation
+                const grade = document.getElementById('attendanceGrade').value;
+                if (!grade) {
+                    this.showFieldError('attendanceGrade', 'Please select a grade');
+                    isValid = false;
+                }
+
+                // Section validation
+                const section = document.getElementById('attendanceSection').value;
+                if (!section) {
+                    this.showFieldError('attendanceSection', 'Please select a section');
+                    isValid = false;
+                }
+
+                // Subject validation
+                const subject = document.getElementById('attendanceSubject').value;
+                if (!subject) {
+                    this.showFieldError('attendanceSubject', 'Please select a subject');
+                    isValid = false;
+                }
+
+                return isValid;
+            }
+
+            loadStudentsForAttendance() {
+                const grade = document.getElementById('attendanceGrade').value;
+                const section = document.getElementById('attendanceSection').value;
+                
+                if (!grade || !section) {
+                    this.showToast('Please select both grade and section!', 'error');
+                    return;
+                }
+                
+                // Get students for this grade and section
+                const students = this.students.filter(s => s.grade === grade && s.section === section);
+                
+                if (students.length === 0) {
+                    this.showToast('No students found for this grade and section!', 'error');
+                    return;
+                }
+                
+                // Generate attendance list HTML
+                const container = document.getElementById('attendanceListContainer');
+                container.innerHTML = students.map(student => `
+                    <div class="attendance-item">
+                        <div class="student-info">
+                            <div class="student-name">${student.name}</div>
+                            <div class="student-id">${student.id}</div>
+                        </div>
+                        <div class="attendance-options">
+                            <div class="attendance-option">
+                                <input type="radio" id="present-${student.id}" name="attendance-${student.id}" value="Present" checked>
+                                <label for="present-${student.id}">Present</label>
+                            </div>
+                            <div class="attendance-option">
+                                <input type="radio" id="absent-${student.id}" name="attendance-${student.id}" value="Absent">
+                                <label for="absent-${student.id}">Absent</label>
+                            </div>
+                            <div class="attendance-option">
+                                <input type="radio" id="late-${student.id}" name="attendance-${student.id}" value="Late">
+                                <label for="late-${student.id}">Late</label>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+                
+                this.showToast(`Loaded ${students.length} students for attendance`, 'success');
+            }
+
+            handleAttendanceSubmit(e) {
+                e.preventDefault();
+                
+                if (!this.validateAttendanceForm()) {
+                    return;
+                }
+
+                const date = document.getElementById('attendanceDate').value;
+                const grade = document.getElementById('attendanceGrade').value;
+                const section = document.getElementById('attendanceSection').value;
+                const subject = document.getElementById('attendanceSubject').value;
+                
+                // Get students for this grade and section
+                const students = this.students.filter(s => s.grade === grade && s.section === section);
+                
+                // Collect attendance data
+                const attendanceRecords = [];
+                students.forEach(student => {
+                    const statusElement = document.querySelector(`input[name="attendance-${student.id}"]:checked`);
+                    if (statusElement) {
+                        const status = statusElement.value;
+                        attendanceRecords.push({
+                            id: `ATT${Date.now()}-${student.id}`,
+                            studentId: student.id,
+                            studentName: student.name,
+                            grade,
+                            section,
+                            subject,
+                            date,
+                            status,
+                            recordedAt: new Date().toISOString()
+                        });
+                    }
+                });
+
+                // Save attendance records
+                this.attendance.push(...attendanceRecords);
+                if (this.saveToStorage('attendance', this.attendance)) {
+                    this.renderAttendance();
+                    this.resetAttendanceForm();
+                    
+                    this.showToast('Attendance recorded successfully!', 'success');
+                    this.addActivity(`Attendance taken for Grade ${grade}${section}`, 'fa-clipboard-check');
+                    this.updateAttendanceStats();
+                    this.renderCalendar();
+                }
+            }
+
+            renderAttendance(filteredAttendance = null) {
+                const attendanceToRender = filteredAttendance || this.attendance;
+                const tbody = document.getElementById('attendanceTableBody');
+                
+                tbody.innerHTML = attendanceToRender.map(record => `
+                    <tr>
+                        <td>${new Date(record.date).toLocaleDateString()}</td>
+                        <td>${record.studentName}</td>
+                        <td>Grade ${record.grade}${record.section}</td>
+                        <td>
+                            <span class="attendance-badge ${record.status.toLowerCase()}">${record.status}</span>
+                        </td>
+                        <td>${record.subject}</td>
+                        <td class="action-buttons">
+                            <button class="action-btn delete" onclick="window.sms.deleteAttendanceRecord('${record.id}')">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                `).join('');
+
+                if (attendanceToRender.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="6" class="no-data">No attendance records found</td></tr>';
+                }
+            }
+
+            searchAttendance(query) {
+                const filtered = this.attendance.filter(record => 
+                    record.studentName.toLowerCase().includes(query.toLowerCase()) ||
+                    record.id.toLowerCase().includes(query.toLowerCase())
+                );
+                this.renderAttendance(filtered);
+            }
+
+            filterAttendance() {
+                const dateFilter = document.getElementById('attendanceFilterDate').value;
+                const gradeFilter = document.getElementById('attendanceFilterGrade').value;
+                
+                let filtered = this.attendance;
+                
+                if (dateFilter) {
+                    filtered = filtered.filter(record => record.date === dateFilter);
+                }
+                
+                if (gradeFilter) {
+                    filtered = filtered.filter(record => record.grade === gradeFilter);
+                }
+                
+                this.renderAttendance(filtered);
+            }
+
+            deleteAttendanceRecord(attendanceId) {
+                if (confirm('Are you sure you want to delete this attendance record?')) {
+                    const record = this.attendance.find(a => a.id === attendanceId);
+                    this.attendance = this.attendance.filter(a => a.id !== attendanceId);
+                    if (this.saveToStorage('attendance', this.attendance)) {
+                        this.renderAttendance();
+                        this.showToast('Attendance record deleted successfully!', 'success');
+                        this.addActivity(`Attendance record deleted for ${record.studentName}`, 'fa-trash');
+                        this.updateAttendanceStats();
+                        this.renderCalendar();
+                    }
+                }
+            }
+
+            updateAttendanceStats() {
+                const today = new Date().toISOString().split('T')[0];
+                const todayAttendance = this.attendance.filter(a => a.date === today);
+                
+                if (todayAttendance.length > 0) {
+                    const presentCount = todayAttendance.filter(a => a.status === 'Present').length;
+                    const absentCount = todayAttendance.filter(a => a.status === 'Absent').length;
+                    const attendanceRate = Math.round((presentCount / todayAttendance.length) * 100);
+                    
+                    document.getElementById('attendance-today').textContent = `${attendanceRate}%`;
+                    document.getElementById('attendance-present').textContent = presentCount;
+                    document.getElementById('attendance-absent').textContent = absentCount;
+                } else {
+                    document.getElementById('attendance-today').textContent = '0%';
+                    document.getElementById('attendance-present').textContent = '0';
+                    document.getElementById('attendance-absent').textContent = '0';
+                }
+                
+                // Calculate monthly attendance
+                const currentMonth = new Date().getMonth();
+                const currentYear = new Date().getFullYear();
+                const monthAttendance = this.attendance.filter(a => {
+                    const recordDate = new Date(a.date);
+                    return recordDate.getMonth() === currentMonth && recordDate.getFullYear() === currentYear;
+                });
+                
+                if (monthAttendance.length > 0) {
+                    const presentCount = monthAttendance.filter(a => a.status === 'Present').length;
+                    const monthlyRate = Math.round((presentCount / monthAttendance.length) * 100);
+                    document.getElementById('attendance-month').textContent = `${monthlyRate}%`;
+                } else {
+                    document.getElementById('attendance-month').textContent = '0%';
+                }
+            }
+
+            // Calendar for Attendance
+            renderCalendar() {
+                const calendarGrid = document.getElementById('calendar-grid');
+                const monthNames = ["January", "February", "March", "April", "May", "June",
+                                    "July", "August", "September", "October", "November", "December"];
+                
+                document.getElementById('current-month').textContent = `${monthNames[this.currentMonth]} ${this.currentYear}`;
+                
+                // Clear previous calendar
+                calendarGrid.innerHTML = '';
+                
+                // Add day headers
+                const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+                days.forEach(day => {
+                    const dayElement = document.createElement('div');
+                    dayElement.className = 'calendar-day header';
+                    dayElement.textContent = day;
+                    calendarGrid.appendChild(dayElement);
+                });
+                
+                // Get first day of month and number of days
+                const firstDay = new Date(this.currentYear, this.currentMonth, 1).getDay();
+                const daysInMonth = new Date(this.currentYear, this.currentMonth + 1, 0).getDate();
+                
+                // Add empty cells for days before the first day of the month
+                for (let i = 0; i < firstDay; i++) {
+                    const emptyCell = document.createElement('div');
+                    emptyCell.className = 'calendar-day';
+                    calendarGrid.appendChild(emptyCell);
+                }
+                
+                // Add cells for each day of the month
+                const today = new Date();
+                for (let day = 1; day <= daysInMonth; day++) {
+                    const dayElement = document.createElement('div');
+                    dayElement.className = 'calendar-day';
+                    dayElement.textContent = day;
+                    
+                    // Check if this day has attendance records
+                    const dateStr = `${this.currentYear}-${String(this.currentMonth + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+                    const hasAttendance = this.attendance.some(a => a.date === dateStr);
+                    
+                    // Check if it's today
+                    if (this.currentYear === today.getFullYear() && 
+                        this.currentMonth === today.getMonth() && 
+                        day === today.getDate()) {
+                        dayElement.classList.add('today');
+                    } else if (hasAttendance) {
+                        dayElement.classList.add('has-attendance');
+                    }
+                    
+                    calendarGrid.appendChild(dayElement);
+                }
+            }
+
+            changeMonth(direction) {
+                this.currentMonth += direction;
+                
+                if (this.currentMonth < 0) {
+                    this.currentMonth = 11;
+                    this.currentYear--;
+                } else if (this.currentMonth > 11) {
+                    this.currentMonth = 0;
+                    this.currentYear++;
+                }
+                
+                this.renderCalendar();
+            }
+
+            // ID Card Management
+            generateAllIDCards() {
+                const container = document.getElementById('idCardsContainer');
+                
+                if (this.students.length === 0) {
+                    container.innerHTML = '<p class="no-data">No students available to generate ID cards</p>';
+                    return;
+                }
+
+                container.innerHTML = this.students.map(student => `
+                    <div class="id-card">
+                        <div class="id-card-header">
+                            <h3>Pak Model Grammar School</h3>
+                            <p>Student Identity Card</p>
+                        </div>
+                        <div class="id-card-body">
+                            <div class="id-card-field">
+                                <span>Name:</span>
+                                <span>${student.name}</span>
+                            </div>
+                            <div class="id-card-field">
+                                <span>ID:</span>
+                                <span>${student.id}</span>
+                            </div>
+                            <div class="id-card-field">
+                                <span>Grade:</span>
+                                <span>${student.grade}${student.section}</span>
+                            </div>
+                            <div class="id-card-field">
+                                <span>Email:</span>
+                                <span>${student.email}</span>
+                            </div>
+                            <div class="id-card-field">
+                                <span>Phone:</span>
+                                <span>${student.phone}</span>
+                            </div>
+                            <div class="id-card-field">
+                                <span>Parent:</span>
+                                <span>${student.parentName}</span>
+                            </div>
+                        </div>
+                        <div class="id-card-actions">
+                            <button class="btn btn-primary" onclick="window.sms.viewIDCard('${student.id}')">
+                                <i class="fas fa-eye"></i> View
+                            </button>
+                            <button class="btn btn-secondary" onclick="window.sms.printSingleIDCard('${student.id}')">
+                                <i class="fas fa-print"></i> Print
+                            </button>
+                        </div>
+                    </div>
+                `).join('');
+
+                this.showToast('ID cards generated successfully!', 'success');
+                this.addActivity('Generated all student ID cards', 'fa-id-card');
+            }
+
+            viewIDCard(studentId) {
+                const student = this.students.find(s => s.id === studentId);
+                if (student) {
+                    const content = `
+                        <div class="id-card" style="max-width: 400px; margin: 0 auto;">
+                            <div class="id-card-header">
+                                <h3>Pak Model Grammar School</h3>
+                                <p>Student Identity Card</p>
+                            </div>
+                            <div class="id-card-body">
+                                <div class="id-card-field">
+                                    <span>Name:</span>
+                                    <span>${student.name}</span>
+                                </div>
+                                <div class="id-card-field">
+                                    <span>ID:</span>
+                                    <span>${student.id}</span>
+                                </div>
+                                <div class="id-card-field">
+                                    <span>Grade:</span>
+                                    <span>${student.grade}${student.section}</span>
+                                </div>
+                                <div class="id-card-field">
+                                    <span>Email:</span>
+                                    <span>${student.email}</span>
+                                </div>
+                                <div class="id-card-field">
+                                    <span>Phone:</span>
+                                    <span>${student.phone}</span>
+                                </div>
+                                <div class="id-card-field">
+                                    <span>Parent:</span>
+                                    <span>${student.parentName}</span>
+                                </div>
+                                <div class="id-card-field">
+                                    <span>Address:</span>
+                                    <span>${student.address}</span>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+
+                    document.getElementById('idCardContent').innerHTML = content;
+                    document.getElementById('idCardModal').style.display = 'block';
+                    this.currentIDCard = student;
+                }
+            }
+
+            closeIDCardModal() {
+                document.getElementById('idCardModal').style.display = 'none';
+                this.currentIDCard = null;
+            }
+
+            printSingleIDCard(studentId) {
+                const student = this.students.find(s => s.id === studentId);
+                if (student) {
+                    const content = `
+                        <div class="id-card" style="border: 2px solid #000; padding: 20px; max-width: 400px; margin: 0 auto;">
+                            <div style="text-align: center; margin-bottom: 20px;">
+                                <h3 style="margin: 0; color: #2c3e50;">Pak Model Grammar School</h3>
+                                <p style="margin: 5px 0; color: #7f8c8d;">Student Identity Card</p>
+                            </div>
+                            <div style="display: grid; gap: 10px;">
+                                <div style="display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px solid #ddd;">
+                                    <span style="font-weight: bold;">Name:</span>
+                                    <span>${student.name}</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px solid #ddd;">
+                                    <span style="font-weight: bold;">ID:</span>
+                                    <span>${student.id}</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px solid #ddd;">
+                                    <span style="font-weight: bold;">Grade:</span>
+                                    <span>${student.grade}${student.section}</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px solid #ddd;">
+                                    <span style="font-weight: bold;">Email:</span>
+                                    <span>${student.email}</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px solid #ddd;">
+                                    <span style="font-weight: bold;">Phone:</span>
+                                    <span>${student.phone}</span>
+                                </div>
+                            </div>
+                            <div style="text-align: center; margin-top: 20px; font-size: 12px; color: #7f8c8d;">
+                                <p>Valid until: ${new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toLocaleDateString()}</p>
+                            </div>
+                        </div>
+                    `;
+
+                    const printWindow = window.open('', '_blank');
+                    printWindow.document.write(`
+                        <!DOCTYPE html>
+                        <html>
+                        <head>
+                            <title>ID Card - ${student.name}</title>
+                            <style>
+                                body { font-family: Arial, sans-serif; margin: 0; padding: 20px; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+                                @media print { body { margin: 0; } }
+                            </style>
+                        </head>
+                        <body>${content}</body>
+                        </html>
+                    `);
+                    printWindow.document.close();
+                    printWindow.print();
+                }
+            }
+
+            printIDCard() {
+                if (!this.currentIDCard) return;
+                
+                const content = document.getElementById('idCardContent').innerHTML;
+                const printWindow = window.open('', '_blank');
+                printWindow.document.write(`
+                    <!DOCTYPE html>
+                    <html>
+                    <head>
+                        <title>ID Card - Print</title>
+                        <style>
+                            body { font-family: Arial, sans-serif; margin: 0; padding: 20px; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+                            .id-card { border: 2px solid #000; padding: 20px; max-width: 400px; }
+                            .id-card-header { text-align: center; margin-bottom: 20px; }
+                            .id-card-body { display: grid; gap: 10px; }
+                            .id-card-field { display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px solid #ddd; }
+                            @media print { body { margin: 0; } }
+                        </style>
+                    </head>
+                    <body>${content}</body>
+                    </html>
+                `);
+                printWindow.document.close();
+                printWindow.print();
+            }
+
+            // Validation Helper Functions
+            clearFormErrors(formId) {
+                const form = document.getElementById(formId);
+                const errorMessages = form.querySelectorAll('.error-message');
+                errorMessages.forEach(error => {
+                    error.textContent = '';
+                });
+                
+                const formGroups = form.querySelectorAll('.form-group');
+                formGroups.forEach(group => {
+                    group.classList.remove('error');
+                });
+            }
+
+            showFieldError(fieldId, message) {
+                const field = document.getElementById(fieldId);
+                const formGroup = field.closest('.form-group');
+                const errorElement = document.getElementById(`${fieldId}-error`);
+                
+                formGroup.classList.add('error');
+                if (errorElement) {
+                    errorElement.textContent = message;
+                }
+            }
+
+            isValidEmail(email) {
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                return emailRegex.test(email);
+            }
+
+            // Sample Data
+            addSampleData() {
+                // Sample Students
+                const sampleStudents = [
+                    {
+                        id: 'STU1001',
+                        name: 'Ali Ahmed',
+                        grade: '10',
+                        section: 'A',
+                        email: 'ali.ahmed@pmgs.edu',
+                        phone: '(555) 123-4567',
+                        parentName: 'Mr. Ahmed Khan',
+                        address: '123 Main Street, Islamabad',
+                        enrollmentDate: new Date().toISOString(),
+                        dob: '2008-05-15'
+                    },
+                    {
+                        id: 'STU1002',
+                        name: 'Sara Khan',
+                        grade: '10',
+                        section: 'B',
+                        email: 'sara.khan@pmgs.edu',
+                        phone: '(555) 234-5678',
+                        parentName: 'Dr. Khan',
+                        address: '456 Oak Avenue, Lahore',
+                        enrollmentDate: new Date().toISOString(),
+                        dob: '2008-08-22'
+                    },
+                    {
+                        id: 'STU1003',
+                        name: 'Bilal Raza',
+                        grade: '11',
+                        section: 'A',
+                        email: 'bilal.raza@pmgs.edu',
+                        phone: '(555) 345-6789',
+                        parentName: 'Mrs. Raza',
+                        address: '789 Pine Road, Karachi',
+                        enrollmentDate: new Date().toISOString(),
+                        dob: '2007-03-10'
+                    }
+                ];
+                
+                this.students = sampleStudents;
+                this.saveToStorage('students', this.students);
+
+                // Sample Teachers
+                const sampleTeachers = [
+                    {
+                        id: 'TCH1001',
+                        name: 'Dr. Usman Ali',
+                        department: 'Science',
+                        email: 'usman.ali@pmgs.edu',
+                        phone: '(555) 456-7890',
+                        qualification: 'Ph.D. in Physics',
+                        salary: '75000',
+                        joinDate: new Date().toISOString()
+                    },
+                    {
+                        id: 'TCH1002',
+                        name: 'Ms. Fatima Javed',
+                        department: 'Mathematics',
+                        email: 'fatima.javed@pmgs.edu',
+                        phone: '(555) 567-8901',
+                        qualification: 'M.Sc. in Mathematics',
+                        salary: '68000',
+                        joinDate: new Date().toISOString()
+                    }
+                ];
+                
+                this.teachers = sampleTeachers;
+                this.saveToStorage('teachers', this.teachers);
+
+                // Sample Exams
+                const sampleExams = [
+                    {
+                        id: 'EXAM1001',
+                        name: 'Final Examination',
+                        subject: 'Mathematics',
+                        grade: '10',
+                        date: '2024-06-15',
+                        time: '09:00',
+                        duration: '3',
+                        maxMarks: '100',
+                        classroom: 'Room 101',
+                        scheduledDate: new Date().toISOString()
+                    },
+                    {
+                        id: 'EXAM1002',
+                        name: 'Final Examination',
+                        subject: 'Science',
+                        grade: '10',
+                        date: '2024-06-17',
+                        time: '09:00',
+                        duration: '3',
+                        maxMarks: '100',
+                        classroom: 'Room 102',
+                        scheduledDate: new Date().toISOString()
+                    }
+                ];
+                
+                this.exams = sampleExams;
+                this.saveToStorage('exams', this.exams);
+
+                // Sample Attendance
+                const today = new Date().toISOString().split('T')[0];
+                const sampleAttendance = [
+                    {
+                        id: 'ATT1001',
+                        studentId: 'STU1001',
+                        studentName: 'Ali Ahmed',
+                        grade: '10',
+                        section: 'A',
+                        subject: 'Mathematics',
+                        date: today,
+                        status: 'Present',
+                        recordedAt: new Date().toISOString()
+                    },
+                    {
+                        id: 'ATT1002',
+                        studentId: 'STU1002',
+                        studentName: 'Sara Khan',
+                        grade: '10',
+                        section: 'B',
+                        subject: 'Mathematics',
+                        date: today,
+                        status: 'Present',
+                        recordedAt: new Date().toISOString()
+                    },
+                    {
+                        id: 'ATT1003',
+                        studentId: 'STU1003',
+                        studentName: 'Bilal Raza',
+                        grade: '11',
+                        section: 'A',
+                        subject: 'Science',
+                        date: today,
+                        status: 'Absent',
+                        recordedAt: new Date().toISOString()
+                    }
+                ];
+                
+                this.attendance = sampleAttendance;
+                this.saveToStorage('attendance', this.attendance);
+
+                // Sample Activities
+                const sampleActivities = [
+                    {
+                        message: 'School Management System initialized with sample data',
+                        icon: 'fa-cog',
+                        timestamp: new Date().toISOString()
+                    },
+                    {
+                        message: 'Sample students, teachers, and exams added',
+                        icon: 'fa-database',
+                        timestamp: new Date().toISOString()
+                    }
+                ];
+                
+                this.activities = sampleActivities;
+                this.saveToStorage('activities', this.activities);
+
+                this.showToast('Sample data loaded successfully!', 'success');
+            }
+
+            // Utility Functions
+            showToast(message, type = 'success') {
+                const toast = document.getElementById('toast');
+                toast.textContent = message;
+                toast.className = 'toast show';
+                
+                if (type === 'error') {
+                    toast.classList.add('error');
+                } else if (type === 'warning') {
+                    toast.classList.add('warning');
+                }
+                
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                }, 3000);
+            }
+        }
+    </script>
+</body>
+</html>
